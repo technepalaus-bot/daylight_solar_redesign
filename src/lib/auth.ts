@@ -1,8 +1,14 @@
 import type { JWT } from "next-auth/jwt";
 import type { Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
-import prisma from "@/lib/prisma";
+
+// ============================================
+// ADMIN CREDENTIALS - CHANGE THESE VALUES
+// ============================================
+const ADMIN_EMAIL = "admin@daylightsolar.com";
+const ADMIN_PASSWORD = "DaylightSolar@2026";
+const ADMIN_NAME = "Admin";
+// ============================================
 
 export const authOptions = {
   providers: [
@@ -17,29 +23,20 @@ export const authOptions = {
           return null;
         }
 
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
-        });
-
-        if (!user) {
-          return null;
+        // Check against hardcoded credentials
+        if (
+          credentials.email === ADMIN_EMAIL &&
+          credentials.password === ADMIN_PASSWORD
+        ) {
+          return {
+            id: "1",
+            email: ADMIN_EMAIL,
+            name: ADMIN_NAME,
+            role: "admin",
+          };
         }
 
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
-
-        if (!isPasswordValid) {
-          return null;
-        }
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
-        };
+        return null;
       },
     }),
   ],

@@ -1,89 +1,42 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Sun, Mail, Lock, User, Eye, EyeOff } from "lucide-react";
+import { Sun, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [isSetup, setIsSetup] = useState(false);
-  const [adminExists, setAdminExists] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    name: "",
   });
-
-  useEffect(() => {
-    checkAdminExists();
-  }, []);
-
-  const checkAdminExists = async () => {
-    try {
-      const res = await fetch("/api/admin/setup");
-      const data = await res.json();
-      setAdminExists(data.adminExists);
-      setIsSetup(!data.adminExists);
-    } catch (error) {
-      console.error("Error checking admin:", error);
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      if (isSetup) {
-        // Create admin
-        const res = await fetch("/api/admin/setup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        });
+      const result = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
 
-        const data = await res.json();
-
-        if (!res.ok) {
-          throw new Error(data.error || "Failed to create admin");
-        }
-
-        toast.success("Admin account created! Please login.");
-        setIsSetup(false);
-        setAdminExists(true);
-        setFormData({ ...formData, name: "" });
-      } else {
-        // Login
-        const result = await signIn("credentials", {
-          email: formData.email,
-          password: formData.password,
-          redirect: false,
-        });
-
-        if (result?.error) {
-          throw new Error("Invalid credentials");
-        }
-
-        toast.success("Login successful!");
-        router.push("/admin/dashboard");
+      if (result?.error) {
+        throw new Error("Invalid credentials");
       }
+
+      toast.success("Login successful!");
+      router.push("/admin/dashboard");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "An error occurred");
     } finally {
       setLoading(false);
     }
   };
-
-  if (adminExists === null) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary via-primary/90 to-tertiary">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-secondary"></div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary via-primary/90 to-tertiary p-4">
@@ -100,24 +53,10 @@ export default function AdminLoginPage() {
         {/* Form Card */}
         <div className="bg-white rounded-3xl shadow-2xl p-8">
           <h2 className="text-2xl font-bold text-primary text-center mb-6">
-            {isSetup ? "Create Admin Account" : "Welcome Back"}
+            Welcome Back
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {isSetup && (
-              <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:border-secondary focus:outline-none transition-colors"
-                  required
-                />
-              </div>
-            )}
-
             <div className="relative">
               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
@@ -157,19 +96,13 @@ export default function AdminLoginPage() {
               {loading ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
-                  {isSetup ? "Creating..." : "Signing in..."}
+                  Signing in...
                 </>
               ) : (
-                <>{isSetup ? "Create Admin" : "Sign In"}</>
+                <>Sign In</>
               )}
             </button>
           </form>
-
-          {!adminExists && (
-            <p className="text-center text-sm text-gray-500 mt-6">
-              First time setup - Create your admin account
-            </p>
-          )}
         </div>
       </div>
     </div>

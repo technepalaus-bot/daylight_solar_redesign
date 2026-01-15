@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { X, ArrowRight, Sun, CheckCircle2, Sparkles, Home, Zap, DollarSign } from "lucide-react";
+import { ArrowRight, Sun, CheckCircle2, Sparkles, Home, Zap, DollarSign } from "lucide-react";
 import { sendSolarSubsidyEmail } from "@/app/(Home_Routes)/checksolarsubsidy/action";
 import Congrats from "@/components/Contact/Congrats";
 

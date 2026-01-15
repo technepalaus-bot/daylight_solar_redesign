@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { Plus, Edit, Trash2, Search, X, Upload, Image as ImageIcon } from "lucide-react";
+import { Plus, Edit, Trash2, Search, X, Upload } from "lucide-react";
 import toast from "react-hot-toast";
 import Image from "next/image";
 
