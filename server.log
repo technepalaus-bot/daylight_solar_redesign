@@ -1,0 +1,69 @@
+nohup: ignoring input
+
+> daylight-solar@0.2.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use, trying 3001 instead.
+  ▲ Next.js 14.2.16
+  - Local:        http://localhost:3001
+  - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 3s
+ ○ Compiling /api/admin/setup ...
+ ✓ Compiled /api/admin/setup in 1412ms (58 modules)
+prisma:query SELECT `main`.`User`.`id`, `main`.`User`.`email`, `main`.`User`.`password`, `main`.`User`.`name`, `main`.`User`.`role`, `main`.`User`.`createdAt`, `main`.`User`.`updatedAt` FROM `main`.`User` WHERE 1=1 LIMIT ? OFFSET ?
+prisma:error 
+Invalid `prisma.user.findFirst()` invocation:
+
+
+The table `main.User` does not exist in the current database.
+Error checking admin: PrismaClientKnownRequestError: 
+Invalid `prisma.user.findFirst()` invocation:
+
+
+The table `main.User` does not exist in the current database.
+    at $n.handleRequestError (/home/paras/Downloads/daylight-solar-main/node_modules/@prisma/client/runtime/library.js:121:7315)
+    at $n.handleAndLogRequestError (/home/paras/Downloads/daylight-solar-main/node_modules/@prisma/client/runtime/library.js:121:6623)
+    at $n.request (/home/paras/Downloads/daylight-solar-main/node_modules/@prisma/client/runtime/library.js:121:6307)
+    at async l (/home/paras/Downloads/daylight-solar-main/node_modules/@prisma/client/runtime/library.js:130:9633)
+    at async GET (webpack-internal:///(rsc)/./src/app/api/admin/setup/route.ts:55:23)
+    at async /home/paras/Downloads/daylight-solar-main/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:55831
+    at async eO.execute (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:46527)
+    at async eO.handle (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:57165)
+    at async doRender (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/server/base-server.js:1352:42)
+    at async cacheEntry.responseCache.get.routeKind (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/server/base-server.js:1574:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/server/base-server.js:1482:28)
+    at async DevServer.renderPageComponent (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/server/base-server.js:1908:24)
+    at async DevServer.renderToResponseImpl (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/server/base-server.js:1946:32)
+    at async DevServer.pipeImpl (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/server/base-server.js:921:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/server/next-server.js:272:17)
+    at async DevServer.handleRequestImpl (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/server/base-server.js:817:17)
+    at async /home/paras/Downloads/daylight-solar-main/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/server/lib/router-server.js:173:21)
+    at async handleRequest (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/server/lib/router-server.js:350:24)
+    at async requestHandlerImpl (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/server/lib/router-server.js:374:13)
+    at async Server.requestListener (/home/paras/Downloads/daylight-solar-main/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  code: 'P2021',
+  clientVersion: '5.22.0',
+  meta: { modelName: 'User', table: 'main.User' }
+}
+ GET /api/admin/setup 500 in 1781ms
+prisma:query SELECT 1
+ GET /api/admin/setup 200 in 48ms
+prisma:query SELECT `main`.`User`.`id`, `main`.`User`.`email`, `main`.`User`.`password`, `main`.`User`.`name`, `main`.`User`.`role`, `main`.`User`.`createdAt`, `main`.`User`.`updatedAt` FROM `main`.`User` WHERE 1=1 LIMIT ? OFFSET ?
+ ○ Compiling /admin/login ...
+ ✓ Compiled /admin/login in 10.5s (624 modules)
+ ✓ Compiled in 1035ms (302 modules)
+ GET /admin/login?id=43b5eaed-da2f-4997-9cb7-dc68f264cfd7&vscodeBrowserReqId=1768457050189 200 in 11640ms
+prisma:query SELECT 1
+prisma:query SELECT `main`.`User`.`id`, `main`.`User`.`email`, `main`.`User`.`password`, `main`.`User`.`name`, `main`.`User`.`role`, `main`.`User`.`createdAt`, `main`.`User`.`updatedAt` FROM `main`.`User` WHERE 1=1 LIMIT ? OFFSET ?
+ GET /api/admin/setup 200 in 132ms
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 7.7s (544 modules)
+prisma:query SELECT `main`.`User`.`id`, `main`.`User`.`email`, `main`.`User`.`password`, `main`.`User`.`name`, `main`.`User`.`role`, `main`.`User`.`createdAt`, `main`.`User`.`updatedAt` FROM `main`.`User` WHERE 1=1 LIMIT ? OFFSET ?
+ GET /api/admin/setup 200 in 8157ms
+ GET /api/auth/session 200 in 9067ms
+ GET /api/auth/session 200 in 35ms
