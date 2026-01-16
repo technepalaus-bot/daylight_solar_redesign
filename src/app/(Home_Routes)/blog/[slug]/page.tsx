@@ -13,6 +13,59 @@ interface BlogPostPageProps {
   };
 }
 
+// Generate Article Schema for SEO
+const generateArticleSchema = (post: BlogPost) => ({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: post.title,
+  description: post.excerpt,
+  image: `https://www.daylightsolar.com.au${post.image}`,
+  datePublished: post.date,
+  dateModified: post.date,
+  author: {
+    "@type": "Person",
+    name: post.author,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Daylight Solar",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.daylightsolar.com.au/img/logo.png",
+    },
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": `https://www.daylightsolar.com.au/blog/${post.slug}`,
+  },
+});
+
+// Generate Breadcrumb Schema for SEO
+const generateBreadcrumbSchema = (post: BlogPost) => ({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://www.daylightsolar.com.au",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Blog",
+      item: "https://www.daylightsolar.com.au/blog",
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: post.title,
+      item: `https://www.daylightsolar.com.au/blog/${post.slug}`,
+    },
+  ],
+});
+
 export default function BlogPostPage({ params }: BlogPostPageProps) {
   const post = blogPosts.find((p: BlogPost) => p.slug === params.slug);
 
@@ -25,8 +78,24 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     .filter((p: BlogPost) => p.category === post.category && p.id !== post.id)
     .slice(0, 3);
 
+  const articleSchema = generateArticleSchema(post);
+  const breadcrumbSchema = generateBreadcrumbSchema(post);
+
   return (
     <main className="bg-white">
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
       {/* Back Button & Breadcrumb */}
       <div className="globalContainer pt-8 pb-6">
         <Link
@@ -200,25 +269,6 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         </section>
       )}
-
-      {/* CTA Section */}
-      <section className="bg-primary text-white py-16">
-        <div className="globalContainer text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Go Solar?
-          </h2>
-          <p className="text-gray-100 mb-8 max-w-2xl mx-auto font-light">
-            Get your free solar assessment today and discover how much you can
-            save with solar energy.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-block bg-secondary text-primary font-bold px-8 py-4 rounded-lg hover:bg-secondary/90 transition-all duration-300 hover:shadow-lg"
-          >
-            Book Free Assessment
-          </Link>
-        </div>
-      </section>
     </main>
   );
 }

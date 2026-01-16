@@ -1,24 +1,86 @@
 import HeroSection from "@/components/HeroSection";
 import { Button } from "@/components/ui/button";
-import { AboutUs } from "@/types";
 import Link from "next/link";
 import React from "react";
 import { Leaf, Lightbulb, Users } from "lucide-react";
 import { AboutDetails, impactData } from "@/constants/home";
 import Image from "next/image";
-import BookSolar from "@/components/BookSolar";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Us - Daylight Solar | Sustainable Solar Solutions",
-  description: "Learn about Daylight Solar's mission to provide innovative, sustainable solar solutions across Australia.",
+  title: "About Daylight Solar | Leading Solar Installation Company Brisbane & Queensland",
+  description:
+    "Discover Daylight Solar - Queensland's trusted solar installation experts. We've installed millions of kWh, reduced thousands of tons of CO2, and powered countless Australian homes with clean energy. CEC accredited installers.",
+  keywords: [
+    "about Daylight Solar",
+    "solar company Brisbane",
+    "Queensland solar installers",
+    "CEC accredited solar installer",
+    "sustainable solar solutions",
+    "solar energy company Australia",
+    "trusted solar installers Brisbane",
+    "eco-friendly solar company",
+    "solar power company Gold Coast",
+    "Sunshine Coast solar company",
+    "solar panel company Queensland",
+    "clean energy company Australia",
+    "renewable energy Brisbane",
+    "solar installation experts",
+  ],
   alternates: {
     canonical: "https://www.daylightsolar.com.au/about",
   },
+  openGraph: {
+    title: "About Daylight Solar | Queensland's Trusted Solar Installation Company",
+    description:
+      "Learn about Daylight Solar's mission, values, and impact. Millions of kWh generated, thousands of homes powered with sustainable solar energy.",
+    url: "https://www.daylightsolar.com.au/about",
+    siteName: "Daylight Solar Australia",
+    images: [
+      {
+        url: "https://www.daylightsolar.com.au/img/about1.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "About Daylight Solar - Sustainable Solar Solutions",
+      },
+    ],
+    locale: "en_AU",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Daylight Solar | Queensland's Solar Experts",
+    description: "Queensland's trusted solar installation company. CEC accredited, millions of kWh generated.",
+    images: ["https://www.daylightsolar.com.au/img/about1.jpeg"],
+  },
 };
 
+// About Page Structured Data
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  mainEntity: {
+    "@type": "Organization",
+    name: "Daylight Solar",
+    description:
+      "Daylight Solar is Queensland's leading solar installation company, providing innovative, sustainable solar solutions for homes and businesses across Brisbane, Gold Coast, and Sunshine Coast.",
+    foundingDate: "2020",
+    numberOfEmployees: {
+      "@type": "QuantitativeValue",
+      value: "50+",
+    },
+    areaServed: ["Brisbane", "Gold Coast", "Sunshine Coast", "Queensland"],
+    award: ["CEC Accredited Installer", "Clean Energy Council Member"],
+    knowsAbout: [
+      "Solar Panel Installation",
+      "Battery Storage Systems",
+      "Residential Solar",
+      "Commercial Solar",
+      "Solar System Maintenance",
+    ],
+  },
+};
 
 const ItemData: string[] = [
   "MILLIONS of kW GENERATED",
@@ -26,44 +88,55 @@ const ItemData: string[] = [
   "THOUSANDS of HOUSEHOLD POWERED",
 ];
 
-const AboutPage: AboutUs[] = [
+const AboutPageData = [
   {
-    icon: (
-      <Lightbulb
-        size={40}
-        className="bg-[#FEF9C3] text-[#FFDD00] rounded-full p-2"
-      />
-    ),
+    iconBg: "#FEF9C3",
+    iconColor: "#FFDD00",
+    iconType: "lightbulb",
     title: "Innovation",
     des: "Pioneering AI-driven solar optimization.",
   },
   {
-    icon: (
-      <Leaf
-        size={40}
-        className="bg-[#DCFCE7] text-[#2E7D32] rounded-full p-2"
-      />
-    ),
+    iconBg: "#DCFCE7",
+    iconColor: "#2E7D32",
+    iconType: "leaf",
     title: "Sustainability",
     des: "Every panel installed = Less carbon, more savings",
   },
   {
-    icon: (
-      <Users
-        size={40}
-        className="bg-[#DBEAFE] text-[#2360BD] rounded-full p-2"
-      />
-    ),
+    iconBg: "#DBEAFE",
+    iconColor: "#2360BD",
+    iconType: "users",
     title: "Community",
     des: "Providing solar installations across rural & urban Australia, including under served areas.",
   },
 ];
+
+const getIcon = (type: string, className: string) => {
+  switch (type) {
+    case "lightbulb":
+      return <Lightbulb size={40} className={className} />;
+    case "leaf":
+      return <Leaf size={40} className={className} />;
+    case "users":
+      return <Users size={40} className={className} />;
+    default:
+      return null;
+  }
+};
 
 const About = () => {
   const chunkSizes = [4, 3, AboutDetails.length - 7];
 
   return (
     <div className="animate-fadeIn">
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(aboutSchema),
+        }}
+      />
       <Navbar />
       {/* HeroSection */}
       <HeroSection
@@ -92,8 +165,6 @@ const About = () => {
       />
       {/* HeroSection */}
 
-      <BookSolar />
-
       {/* section 2 */}
 
       <div className="py-16 md:py-24 bg-primary overflow-hidden">
@@ -102,13 +173,15 @@ const About = () => {
             What Drives Us – The Core of Our Mission
           </h1>
           <div className="grid md:grid-cols-3 gap-6 md:gap-10">
-            {AboutPage.map((item, idx) => (
+            {AboutPageData.map((item, idx) => (
               <div 
                 key={idx} 
                 className="group border border-white/30 hover:border-secondary rounded-2xl p-8 transition-all duration-500 hover:bg-white/5 hover:shadow-2xl hover:shadow-secondary/20 hover:-translate-y-2 backdrop-blur-sm"
                 style={{ animationDelay: `${idx * 150}ms` }}
               >
-                <div className="transform group-hover:scale-110 transition-transform duration-300 mb-6">{item.icon}</div>
+                <div className="transform group-hover:scale-110 transition-transform duration-300 mb-6">
+                  {getIcon(item.iconType, `bg-[${item.iconBg}] text-[${item.iconColor}] rounded-full p-2`)}
+                </div>
                 <p className="text-lg md:text-2xl font-semibold mb-4 text-white group-hover:text-secondary transition-colors duration-300">
                   {item.title}
                 </p>
@@ -224,7 +297,6 @@ const About = () => {
         </div>
       </div>
       {/* section 4 */}
-      <Footer />
     </div>
   );
 };

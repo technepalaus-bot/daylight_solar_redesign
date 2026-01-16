@@ -7,7 +7,23 @@ import type { BlogPost } from "@/constants/blog";
 import { blogPosts, blogCategories } from "@/constants/blog";
 import { MoveRight, Sparkles, Calendar, Clock } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+// Blog Page Schema for SEO
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: "Daylight Solar Blog",
+  description: "Expert solar energy insights, tips, and guides for Australian homeowners and businesses.",
+  url: "https://www.daylightsolar.com.au/blog",
+  publisher: {
+    "@type": "Organization",
+    name: "Daylight Solar",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.daylightsolar.com.au/img/logo.png",
+    },
+  },
+};
 
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
@@ -19,6 +35,13 @@ export default function BlogPage() {
 
   return (
     <main className="bg-gradient-to-b from-gray-50 to-white animate-fadeIn">
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(blogSchema),
+        }}
+      />
       <Navbar />
       
       {/* Hero Section */}
@@ -169,8 +192,6 @@ export default function BlogPage() {
           </div>
         )}
       </section>
-      
-      <Footer />
     </main>
   );
 }

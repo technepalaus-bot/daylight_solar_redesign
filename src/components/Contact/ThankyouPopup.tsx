@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import { CircleCheckBig } from 'lucide-react';
+import { CircleCheckBig, X } from 'lucide-react';
 import { useRouter } from "next/navigation";
 
 interface BookingPopupProps {
@@ -31,9 +31,18 @@ const ThankyouPopup: React.FC<BookingPopupProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
-      <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg max-w-md w-[90%] sm:max-w-2xl text-center">
-        <h2 className="text-xl sm:text-2xl font-semibold text-[#004643]">
+    <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50 p-4">
+      <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg max-w-md w-full sm:max-w-2xl text-center relative">
+        {/* Close Button */}
+        <button
+          onClick={handleGoBack}
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-50 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full p-1.5 sm:p-2 transition-all duration-300 hover:scale-110"
+          aria-label="Close popup"
+        >
+          <X className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+
+        <h2 className="text-xl sm:text-2xl font-semibold text-[#004643] pt-2">
           Thank you for booking your <br />{" "}
           <span className="text-[#004643] font-semibold">Free Solar Assessment!</span>
         </h2>

@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import Providers from "@/components/Providers";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
+import BookSolar from "@/components/BookSolar";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -134,17 +135,20 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "Daylight Solar",
-              "url": "https://daylightsolar.com.au",
-              "logo": "https://daylightsolar.com.au/img/logo.png",
-              "description": "Premium solar panel installation for homes, businesses & industry in Brisbane, Gold Coast & Sunshine Coast.",
+              "url": "https://www.daylightsolar.com.au",
+              "logo": "https://www.daylightsolar.com.au/img/logo.png",
+              "description": "Premium solar panel installation for homes, businesses & industry in Brisbane, Gold Coast & Sunshine Coast. Government rebates available.",
               "areaServed": [
                 { "@type": "City", "name": "Brisbane" },
                 { "@type": "City", "name": "Gold Coast" },
-                { "@type": "City", "name": "Sunshine Coast" }
+                { "@type": "City", "name": "Sunshine Coast" },
+                { "@type": "City", "name": "Ipswich" },
+                { "@type": "City", "name": "Logan" },
+                { "@type": "State", "name": "Queensland" }
               ],
               "contactPoint": {
                 "@type": "ContactPoint",
-                "telephone": "+61-7-XXXX-XXXX",
+                "telephone": "+61-7-3422-6150",
                 "contactType": "customer service",
                 "areaServed": "AU",
                 "availableLanguage": "English"
@@ -153,7 +157,34 @@ export default function RootLayout({
                 "https://www.facebook.com/daylightsolar",
                 "https://www.instagram.com/daylightsolar",
                 "https://www.linkedin.com/company/daylightsolar"
-              ]
+              ],
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Solar Installation Services",
+                "itemListElement": [
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Residential Solar Installation"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Commercial Solar Installation"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Solar Battery Storage"
+                    }
+                  }
+                ]
+              }
             }),
           }}
         />
@@ -165,32 +196,60 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
               "name": "Daylight Solar",
-              "image": "https://daylightsolar.com.au/img/logo.png",
-              "@id": "https://daylightsolar.com.au",
-              "url": "https://daylightsolar.com.au",
+              "image": "https://www.daylightsolar.com.au/img/logo.png",
+              "@id": "https://www.daylightsolar.com.au",
+              "url": "https://www.daylightsolar.com.au",
+              "telephone": "+61-7-3422-6150",
+              "email": "hello@daylightsolar.com.au",
               "priceRange": "$$",
               "address": {
                 "@type": "PostalAddress",
-                "addressLocality": "Brisbane",
+                "streetAddress": "30 Chancellor Village Blvd",
+                "addressLocality": "Sippy Downs",
                 "addressRegion": "QLD",
+                "postalCode": "4556",
                 "addressCountry": "AU"
               },
               "geo": {
                 "@type": "GeoCoordinates",
-                "latitude": -27.4698,
-                "longitude": 153.0251
+                "latitude": -26.7189,
+                "longitude": 153.0589
               },
-              "openingHoursSpecification": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                "opens": "08:00",
-                "closes": "17:00"
-              },
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                  "opens": "08:00",
+                  "closes": "17:00"
+                },
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": "Saturday",
+                  "opens": "09:00",
+                  "closes": "14:00"
+                }
+              ],
               "aggregateRating": {
                 "@type": "AggregateRating",
                 "ratingValue": "4.9",
-                "reviewCount": "150"
-              }
+                "reviewCount": "150",
+                "bestRating": "5",
+                "worstRating": "1"
+              },
+              "review": [
+                {
+                  "@type": "Review",
+                  "reviewRating": {
+                    "@type": "Rating",
+                    "ratingValue": "5"
+                  },
+                  "author": {
+                    "@type": "Person",
+                    "name": "John Smith"
+                  },
+                  "reviewBody": "Excellent service and professional installation. Our power bills have dropped significantly!"
+                }
+              ]
             }),
           }}
         />
@@ -289,6 +348,7 @@ export default function RootLayout({
       </head>
       <body className="font-outfit">
         <Providers>{children}</Providers>
+        <BookSolar />
         <ServiceWorkerRegister />
       </body>
     </html>

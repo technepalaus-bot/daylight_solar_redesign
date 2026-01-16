@@ -86,54 +86,53 @@ const ContactForm = () => {
   ];
 
   return (
-    <div className="globalContainer bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-12 max-w-3xl overflow-y-auto sm:overflow-y-visible shadow-2xl border border-gray-100 relative overflow-hidden mx-2 sm:mx-auto">
+    <div className="globalContainer bg-white rounded-2xl sm:rounded-3xl p-3 sm:p-4 md:p-6 max-w-3xl shadow-2xl border border-gray-100 relative overflow-hidden mx-2 sm:mx-auto">
       {/* Decorative Background */}
-      <div className="absolute top-0 right-0 w-20 sm:w-40 h-20 sm:h-40 bg-gradient-to-bl from-secondary/10 to-transparent rounded-full blur-2xl"></div>
-      <div className="absolute bottom-0 left-0 w-20 sm:w-40 h-20 sm:h-40 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-2xl"></div>
+      <div className="absolute top-0 right-0 w-16 sm:w-32 h-16 sm:h-32 bg-gradient-to-bl from-secondary/10 to-transparent rounded-full blur-2xl"></div>
+      <div className="absolute bottom-0 left-0 w-16 sm:w-32 h-16 sm:h-32 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-2xl"></div>
       
       <div className="relative z-10">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 mb-6 sm:mb-8">
-          <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-primary to-primary/80 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg icon-3d">
-            <Sun className="w-5 h-5 sm:w-7 sm:h-7 text-secondary animate-spin-slow" />
+        <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary to-primary/80 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg icon-3d flex-shrink-0">
+            <Sun className="w-4 h-4 sm:w-5 sm:h-5 text-secondary animate-spin-slow" />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-primary">
               Get Your Free Solar Consultation
             </h2>
-            <p className="text-gray-500 text-xs sm:text-sm mt-1">Obligation free assessment for your home</p>
+            <p className="text-gray-500 text-[10px] sm:text-xs">Obligation free assessment for your home</p>
           </div>
         </div>
         
         {error && (
-          <div className="bg-red-50 border-l-4 border-red-500 text-red-600 px-3 sm:px-4 py-2 sm:py-3 rounded-r-xl mb-4 sm:mb-6 animate-shake">
-            <p className="text-xs sm:text-sm font-medium">{error}</p>
+          <div className="bg-red-50 border-l-4 border-red-500 text-red-600 px-2 py-1.5 rounded-r-lg mb-2 animate-shake">
+            <p className="text-[10px] sm:text-xs font-medium">{error}</p>
           </div>
         )}
         {responseMessage && (
-          <div className={`px-3 sm:px-4 py-2 sm:py-3 rounded-xl mb-4 sm:mb-6 border-l-4 ${
+          <div className={`px-2 py-1.5 rounded-lg mb-2 border-l-4 ${
             responseMessage.includes("Error")
               ? "bg-red-50 border-red-500 text-red-500"
               : "bg-green-50 border-green-500 text-green-600"
           }`}>
-            <p className="text-xs sm:text-sm font-medium">{responseMessage}</p>
+            <p className="text-[10px] sm:text-xs font-medium">{responseMessage}</p>
           </div>
         )}
         
-        <form className="grid grid-cols-1 gap-4 sm:gap-5 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-6" onSubmit={handleSubmit}>
-          {formFields.map((field, idx) => (
+        <form className="grid grid-cols-1 gap-2 sm:gap-3 sm:grid-cols-2 sm:gap-x-4 sm:gap-y-3" onSubmit={handleSubmit}>
+          {formFields.map((field) => (
             <div
               key={field.name}
-              className="group animate-slideUp"
-              style={{ animationDelay: `${idx * 50}ms` }}
+              className="group"
             >
-              <label className="text-gray-700 font-semibold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
-                <span className={`icon-3d p-1 sm:p-1.5 rounded-lg transition-all duration-300 ${
+              <label className="text-gray-700 font-semibold text-[10px] sm:text-xs flex items-center gap-1 mb-1">
+                <span className={`p-0.5 sm:p-1 rounded transition-all duration-300 ${
                   focusedField === field.name 
                     ? 'bg-primary text-white' 
-                    : 'bg-gray-100 text-gray-500 group-hover:bg-primary/10 group-hover:text-primary'
+                    : 'bg-gray-100 text-gray-500'
                 }`}>
-                  {React.cloneElement(field.icon, { className: "w-4 h-4 sm:w-5 sm:h-5" })}
+                  {React.cloneElement(field.icon, { className: "w-3 h-3 sm:w-4 sm:h-4" })}
                 </span>
                 {field.label}
               </label>
@@ -145,9 +144,9 @@ const ContactForm = () => {
                 onFocus={() => setFocusedField(field.name)}
                 onBlur={() => setFocusedField(null)}
                 placeholder={field.placeholder}
-                className={`w-full bg-gray-50 font-normal border-2 rounded-xl p-2.5 sm:p-3.5 text-xs sm:text-sm focus:outline-none transition-all duration-300 placeholder-gray-400 input-3d ${
+                className={`w-full bg-gray-50 font-normal border rounded-lg p-2 sm:p-2.5 text-xs sm:text-sm focus:outline-none transition-all duration-300 placeholder-gray-400 ${
                   focusedField === field.name
-                    ? "border-primary bg-white shadow-lg shadow-primary/10"
+                    ? "border-primary bg-white shadow-sm shadow-primary/10"
                     : "border-gray-200 hover:border-gray-300"
                 }`}
               />
@@ -155,35 +154,33 @@ const ContactForm = () => {
           ))}
           
           {/* Solar Question */}
-          <div className="text-gray-700 font-semibold text-xs sm:text-sm animate-slideUp" style={{ animationDelay: '250ms' }}>
-            <label className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
-              <span className="icon-3d p-1 sm:p-1.5 rounded-lg bg-gray-100 text-gray-500">
-                <Sun className="w-4 h-4 sm:w-5 sm:h-5" />
+          <div className="text-gray-700 font-semibold text-[10px] sm:text-xs">
+            <label className="flex items-center gap-1 mb-1">
+              <span className="p-0.5 sm:p-1 rounded bg-gray-100 text-gray-500">
+                <Sun className="w-3 h-3 sm:w-4 sm:h-4" />
               </span>
               Do you have an existing solar?
             </label>
-            <div className="flex gap-2 sm:gap-3">
+            <div className="flex gap-2">
               {["yes", "no"].map((option) => (
                 <label
                   key={option}
-                  className={`flex-1 cursor-pointer transition-all duration-300 ${
-                    hasSolar === option ? "scale-[1.02]" : "hover:scale-[1.01]"
-                  }`}
+                  className="flex-1 cursor-pointer"
                 >
                   <div
-                    className={`card-3d p-3 sm:p-4 rounded-xl border-2 flex items-center justify-center gap-2 sm:gap-3 transition-all duration-300 ${
+                    className={`p-2 sm:p-2.5 rounded-lg border flex items-center justify-center gap-1.5 transition-all duration-300 ${
                       hasSolar === option
-                        ? "border-primary bg-primary/5 shadow-lg shadow-primary/20"
-                        : "border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-white"
+                        ? "border-primary bg-primary/5"
+                        : "border-gray-200 bg-gray-50 hover:border-gray-300"
                     }`}
                   >
                     <input type="radio" name="existing_solar" value={option} checked={hasSolar === option} onChange={handleChange} className="hidden" />
-                    <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                    <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
                       hasSolar === option ? "border-primary bg-primary" : "border-gray-300"
                     }`}>
-                      {hasSolar === option && <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-white rounded-full"></div>}
+                      {hasSolar === option && <div className="w-1.5 h-1.5 bg-white rounded-full"></div>}
                     </div>
-                    <span className={`font-semibold text-sm sm:text-base ${hasSolar === option ? "text-primary" : "text-gray-600"}`}>
+                    <span className={`font-semibold text-xs sm:text-sm ${hasSolar === option ? "text-primary" : "text-gray-600"}`}>
                       {option === "yes" ? "Yes" : "No"}
                     </span>
                   </div>
@@ -193,10 +190,10 @@ const ContactForm = () => {
           </div>
           
           {hasSolar === "yes" && (
-            <div className="animate-slideUp">
-              <label className="text-gray-700 font-semibold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
-                <span className="icon-3d p-1 sm:p-1.5 rounded-lg bg-gray-100 text-gray-500">
-                  <Sun className="w-4 h-4 sm:w-5 sm:h-5" />
+            <div>
+              <label className="text-gray-700 font-semibold text-[10px] sm:text-xs flex items-center gap-1 mb-1">
+                <span className="p-0.5 sm:p-1 rounded bg-gray-100 text-gray-500">
+                  <Sun className="w-3 h-3 sm:w-4 sm:h-4" />
                 </span>
                 If yes, how many panels?
               </label>
@@ -206,51 +203,51 @@ const ContactForm = () => {
                 value={formData.solarUnits}
                 onChange={handleChange}
                 placeholder="Enter the number of units"
-                className="w-full bg-gray-50 font-normal border-2 border-gray-200 hover:border-gray-300 focus:border-primary focus:bg-white focus:shadow-lg focus:shadow-primary/10 text-gray-700 rounded-xl p-2.5 sm:p-3.5 text-xs sm:text-sm focus:outline-none transition-all duration-300 placeholder-gray-400 input-3d"
+                className="w-full bg-gray-50 font-normal border border-gray-200 hover:border-gray-300 focus:border-primary focus:bg-white text-gray-700 rounded-lg p-2 sm:p-2.5 text-xs sm:text-sm focus:outline-none transition-all duration-300 placeholder-gray-400"
               />
             </div>
           )}
           
           {/* Date & Time Section */}
-          <div className="sm:col-span-2 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl sm:rounded-2xl p-3 sm:p-5 border border-primary/10 animate-slideUp" style={{ animationDelay: '300ms' }}>
-            <div className="flex items-center gap-1.5 sm:gap-2 mb-3 sm:mb-4">
-              <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-              <p className="text-gray-700 font-semibold text-xs sm:text-sm">
-                When is the best suitable time to visit you for solar assessment?
+          <div className="sm:col-span-2 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg p-2 sm:p-3 border border-primary/10">
+            <div className="flex items-center gap-1 mb-1.5">
+              <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
+              <p className="text-gray-700 font-semibold text-[10px] sm:text-xs">
+                Best time to visit for solar assessment?
               </p>
             </div>
-            <p className="text-green-600 font-medium text-[10px] sm:text-xs mb-3 sm:mb-4 flex items-center gap-1">
-              <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-              Note: Our representative will contact you to confirm your appointment.
+            <p className="text-green-600 font-medium text-[9px] sm:text-[10px] mb-2 flex items-center gap-1">
+              <span className="w-1 h-1 bg-green-500 rounded-full animate-pulse"></span>
+              Our representative will contact you to confirm.
             </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
               {/* Date */}
               <div>
-                <label className="text-gray-600 text-xs sm:text-sm font-medium flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
-                  <Calendar className="w-3 h-3 sm:w-4 sm:h-4" /> Date
+                <label className="text-gray-600 text-[10px] sm:text-xs font-medium flex items-center gap-1 mb-1">
+                  <Calendar className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> Date
                 </label>
-                <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                  <input type="text" name="dateDay" value={formData.dateDay} onChange={handleChange} placeholder="Day" className="w-full bg-white font-normal border-2 border-gray-200 text-gray-700 rounded-lg p-1.5 sm:p-2 text-xs sm:text-sm focus:outline-none focus:border-primary transition-all duration-300 input-3d" />
-                  <select name="dateMonth" value={formData.dateMonth} onChange={handleChange} className="w-full border-2 border-gray-200 rounded-lg p-1.5 sm:p-2 text-xs sm:text-sm focus:outline-none focus:border-primary bg-white transition-all duration-300">
-                    <option value="">Month</option>
+                <div className="grid grid-cols-3 gap-1">
+                  <input type="text" name="dateDay" value={formData.dateDay} onChange={handleChange} placeholder="DD" className="w-full bg-white font-normal border border-gray-200 text-gray-700 rounded p-1.5 text-[10px] sm:text-xs focus:outline-none focus:border-primary" />
+                  <select name="dateMonth" value={formData.dateMonth} onChange={handleChange} className="w-full border border-gray-200 rounded p-1.5 text-[10px] sm:text-xs focus:outline-none focus:border-primary bg-white">
+                    <option value="">MM</option>
                     {Array.from({ length: 12 }, (_, i) => (
                       <option key={i} value={i + 1}>{new Date(0, i).toLocaleString("default", { month: "short" })}</option>
                     ))}
                   </select>
-                  <input type="text" name="dateYear" value={formData.dateYear} onChange={handleChange} placeholder="Year" className="w-full bg-white font-normal border-2 border-gray-200 text-gray-700 rounded-lg p-1.5 sm:p-2 text-xs sm:text-sm focus:outline-none focus:border-primary transition-all duration-300 input-3d" />
+                  <input type="text" name="dateYear" value={formData.dateYear} onChange={handleChange} placeholder="YYYY" className="w-full bg-white font-normal border border-gray-200 text-gray-700 rounded p-1.5 text-[10px] sm:text-xs focus:outline-none focus:border-primary" />
                 </div>
               </div>
               
               {/* Time */}
               <div>
-                <label className="text-gray-600 text-xs sm:text-sm font-medium flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
-                  <Clock className="w-3 h-3 sm:w-4 sm:h-4" /> Time
+                <label className="text-gray-600 text-[10px] sm:text-xs font-medium flex items-center gap-1 mb-1">
+                  <Clock className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> Time
                 </label>
-                <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                  <input type="text" name="timeHours" value={formData.timeHours} onChange={handleChange} placeholder="Hours" className="w-full bg-white font-normal border-2 border-gray-200 text-gray-700 rounded-lg p-1.5 sm:p-2 text-xs sm:text-sm focus:outline-none focus:border-primary transition-all duration-300 input-3d" />
-                  <input type="text" name="timeMinutes" value={formData.timeMinutes} onChange={handleChange} placeholder="Min" className="w-full bg-white font-normal border-2 border-gray-200 text-gray-700 rounded-lg p-1.5 sm:p-2 text-xs sm:text-sm focus:outline-none focus:border-primary transition-all duration-300 input-3d" />
-                  <select name="timePeriod" value={formData.timePeriod} onChange={handleChange} className="w-full border-2 border-gray-200 rounded-lg p-1.5 sm:p-2 text-xs sm:text-sm focus:outline-none focus:border-primary bg-white transition-all duration-300">
+                <div className="grid grid-cols-3 gap-1">
+                  <input type="text" name="timeHours" value={formData.timeHours} onChange={handleChange} placeholder="HH" className="w-full bg-white font-normal border border-gray-200 text-gray-700 rounded p-1.5 text-[10px] sm:text-xs focus:outline-none focus:border-primary" />
+                  <input type="text" name="timeMinutes" value={formData.timeMinutes} onChange={handleChange} placeholder="MM" className="w-full bg-white font-normal border border-gray-200 text-gray-700 rounded p-1.5 text-[10px] sm:text-xs focus:outline-none focus:border-primary" />
+                  <select name="timePeriod" value={formData.timePeriod} onChange={handleChange} className="w-full border border-gray-200 rounded p-1.5 text-[10px] sm:text-xs focus:outline-none focus:border-primary bg-white">
                     <option value="AM">AM</option>
                     <option value="PM">PM</option>
                   </select>
@@ -262,18 +259,18 @@ const ContactForm = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full btn-3d bg-gradient-to-r from-primary to-primary/90 hover:from-primary hover:to-teal-700 text-white py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 mt-2 sm:col-span-2 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary hover:to-teal-700 text-white py-2.5 sm:py-3 rounded-lg font-bold text-xs sm:text-sm transition-all duration-300 mt-1 sm:col-span-2 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1.5"
             disabled={loading}
           >
             {loading ? (
               <>
-                <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                <span className="text-sm sm:text-base">Processing...</span>
+                <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                <span className="text-xs sm:text-sm">Processing...</span>
               </>
             ) : (
               <>
-                <Sun className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="text-sm sm:text-base">Request Free Consultation</span>
+                <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <span className="text-xs sm:text-sm">Request Free Consultation</span>
               </>
             )}
           </button>

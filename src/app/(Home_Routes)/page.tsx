@@ -8,17 +8,10 @@ import WhyDayLight from "@/components/Home/WhyDayLight";
 import Carousel from "@/components/Home/Carousel";
 import { MoveRight, X, ChevronDown, ChevronUp } from "lucide-react";
 import Testimonials from "@/components/Home/Testimonial";
-import BookSolar from "@/components/BookSolar";
 import { useEffect, useRef, useState } from "react";
 import ContactForm from "@/components/Contact/ContactForm";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-
-
-import Head from "next/head";
-
-
 
 // FAQ data
 const faqData = [
@@ -74,7 +67,7 @@ const faqData = [
   },
 ];
 
-// FAQ Schema
+// FAQ Schema for SEO
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -86,6 +79,90 @@ const faqSchema = {
       text: faq.answer,
     },
   })),
+};
+
+// Local Business Schema for SEO
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://www.daylightsolar.com.au",
+  name: "Daylight Solar",
+  image: "https://www.daylightsolar.com.au/img/logo.png",
+  description: "Premium solar panel installation company serving Brisbane, Gold Coast & Sunshine Coast. Government rebates available.",
+  url: "https://www.daylightsolar.com.au",
+  telephone: "+61-7-3422-6150",
+  email: "hello@daylightsolar.com.au",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "30 Chancellor Village Blvd",
+    addressLocality: "Sippy Downs",
+    addressRegion: "QLD",
+    postalCode: "4556",
+    addressCountry: "AU",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: -26.7189,
+    longitude: 153.0589,
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "08:00",
+      closes: "17:00",
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: "Saturday",
+      opens: "09:00",
+      closes: "14:00",
+    },
+  ],
+  priceRange: "$$",
+  areaServed: [
+    { "@type": "City", name: "Brisbane" },
+    { "@type": "City", name: "Gold Coast" },
+    { "@type": "City", name: "Sunshine Coast" },
+    { "@type": "City", name: "Ipswich" },
+    { "@type": "City", name: "Logan" },
+  ],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.9",
+    reviewCount: "127",
+    bestRating: "5",
+    worstRating: "1",
+  },
+  sameAs: [
+    "https://www.facebook.com/daylightsolar",
+    "https://www.instagram.com/daylightsolar",
+    "https://www.linkedin.com/company/daylightsolar",
+  ],
+};
+
+// Service Schema for SEO
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Solar Panel Installation",
+  provider: {
+    "@type": "LocalBusiness",
+    name: "Daylight Solar",
+  },
+  areaServed: {
+    "@type": "State",
+    name: "Queensland",
+  },
+  description: "Professional solar panel installation services for residential and commercial properties in Queensland.",
+  offers: {
+    "@type": "Offer",
+    availability: "https://schema.org/InStock",
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      priceCurrency: "AUD",
+    },
+  },
 };
 
 export default function Home() {
@@ -152,13 +229,23 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <link rel="canonical" href="https://www.daylightsolar.com.au/" />
-      </Head>
+      {/* Structured Data for SEO */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(faqSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localBusinessSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema),
         }}
       />
       <Navbar />
@@ -209,8 +296,6 @@ export default function Home() {
       </div>
 
       {/* Hero Section */}
-
-      <BookSolar />
 
       {/* Feature Section */}
       <div className="relative bg-gradient-to-r from-primary via-primary/95 to-primary/90 py-12 sm:py-16 md:py-32 overflow-hidden">
@@ -526,7 +611,6 @@ export default function Home() {
           </div>
         </div>
       )}
-      <Footer />
     </>
   );
 }

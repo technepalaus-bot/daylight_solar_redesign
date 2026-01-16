@@ -99,6 +99,39 @@
   75% { transform: translateX(5px); }
 }
 
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes float-3d {
+  0%, 100% {
+    transform: perspective(1000px) translateY(0) rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: perspective(1000px) translateY(-5px) rotateX(2deg) rotateY(2deg);
+  }
+  50% {
+    transform: perspective(1000px) translateY(-10px) rotateX(0deg) rotateY(0deg);
+  }
+  75% {
+    transform: perspective(1000px) translateY(-5px) rotateX(-2deg) rotateY(-2deg);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 221, 0, 0.5), 0 0 10px rgba(255, 221, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 221, 0, 0.8), 0 0 30px rgba(255, 221, 0, 0.5);
+  }
+}
+
 @keyframes pulse-glow {
   0%, 100% {
     box-shadow: 0 0 20px rgba(255, 221, 0, 0.3);
@@ -215,6 +248,18 @@
 
 .animate-glow-pulse {
   animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+.animate-float-3d {
+  animation: float-3d 4s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
 }
 
 /* 3D Card Effect */

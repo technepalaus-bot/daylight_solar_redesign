@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { ArrowRight, Sun, CheckCircle2, Sparkles, Home, Zap, DollarSign } from "lucide-react";
+import { ArrowRight, Sun, CheckCircle2, Sparkles, Home, Zap, DollarSign, X } from "lucide-react";
 import { sendSolarSubsidyEmail } from "@/app/(Home_Routes)/checksolarsubsidy/action";
 import Congrats from "@/components/Contact/Congrats";
 
@@ -105,30 +105,39 @@ const SolarSubsidyPopup = ({ isOpen, onClose }: SolarSubsidyPopupProps) => {
       {/* Popup Modal */}
       <div className="fixed inset-0 z-[101] flex items-center justify-center p-2 sm:p-4 animate-fadeIn">
         <div
-          className="relative w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto bg-white rounded-2xl sm:rounded-3xl shadow-2xl"
+          className="relative w-full max-w-xl max-h-[98vh] overflow-y-auto bg-white rounded-2xl shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header with gradient */}
-          <div className="relative bg-gradient-to-r from-primary to-teal-600 p-4 sm:p-6 rounded-t-2xl sm:rounded-t-3xl">
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className="absolute top-2 right-2 sm:top-3 sm:right-3 z-50 bg-white/20 hover:bg-white/30 text-white rounded-full p-1 sm:p-1.5 transition-all duration-300 hover:scale-110"
+            aria-label="Close popup"
+          >
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
+          </button>
 
-            <div className="flex items-center gap-2 sm:gap-3 mb-3 pr-8">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Sun className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+          {/* Header with gradient */}
+          <div className="relative bg-gradient-to-r from-primary to-teal-600 p-3 sm:p-4 rounded-t-2xl">
+
+            <div className="flex items-center gap-2 pr-6">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Sun className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-xl sm:text-2xl font-bold text-white">Check Solar Subsidy</h2>
-                <p className="text-white/80 text-xs sm:text-sm">Find out your eligibility in minutes</p>
+                <h2 className="text-lg sm:text-xl font-bold text-white">Check Solar Subsidy</h2>
+                <p className="text-white/80 text-[10px] sm:text-xs">Find out your eligibility in minutes</p>
               </div>
             </div>
 
             {/* Benefits */}
-            <div className="flex flex-wrap gap-2 mt-4">
+            <div className="flex flex-wrap gap-1.5 mt-2">
               {benefits.map((benefit, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-1.5 sm:gap-2 text-white bg-white/15 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm"
+                  className="flex items-center gap-1 text-white bg-white/15 px-2 py-0.5 rounded-full text-[10px] sm:text-xs"
                 >
-                  {benefit.icon}
+                  {React.cloneElement(benefit.icon as React.ReactElement, { className: "w-3 h-3" })}
                   <span>{benefit.text}</span>
                 </div>
               ))}
@@ -136,125 +145,130 @@ const SolarSubsidyPopup = ({ isOpen, onClose }: SolarSubsidyPopupProps) => {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-3 sm:space-y-4">
+          <form onSubmit={handleSubmit} className="p-3 sm:p-4 space-y-2 sm:space-y-2.5">
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-3 sm:px-4 py-2 sm:py-3 rounded-xl text-xs sm:text-sm">
+              <div className="bg-red-50 border border-red-200 text-red-600 px-2 py-1.5 rounded-lg text-[10px] sm:text-xs">
                 {error}
               </div>
             )}
 
-            {/* Form Fields */}
-            {formFields.map((field, index) => (
-              <div key={index}>
-                <label className="text-gray-700 font-semibold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
-                  <span className="text-base sm:text-lg">{field.icon}</span> {field.label}
-                </label>
-                <input
-                  type={field.type}
-                  name={field.name}
-                  value={formData[field.name as keyof typeof formData]}
-                  onChange={handleChange}
-                  placeholder={field.placeholder}
-                  required
-                  className={`w-full bg-gray-50 border-2 text-sm sm:text-base ${
-                    errors.includes(field.name)
-                      ? "border-red-400 bg-red-50"
-                      : "border-gray-200 hover:border-gray-300 focus:border-primary focus:bg-white"
-                  } rounded-xl p-2.5 sm:p-3 placeholder:text-gray-400 focus:outline-none transition-all duration-300`}
-                />
-              </div>
-            ))}
-
-            {/* Property Type */}
-            <div>
-              <label className="text-gray-700 font-semibold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
-                <span className="text-base sm:text-lg">🏗️</span> Property Type
-              </label>
-              <div className="grid grid-cols-2 gap-2 sm:gap-3">
-                {["Residential", "Commercial"].map((type) => (
-                  <label
-                    key={type}
-                    className={`cursor-pointer rounded-xl border-2 p-2.5 sm:p-3 transition-all duration-300 ${
-                      formData.property === type.toLowerCase()
-                        ? "border-primary bg-primary/5 shadow-md"
-                        : "border-gray-200 hover:border-gray-300 bg-gray-50"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="property"
-                      value={type.toLowerCase()}
-                      onChange={handleChange}
-                      className="sr-only"
-                    />
-                    <div className="flex items-center gap-1.5 sm:gap-2">
-                      <div
-                        className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center ${
-                          formData.property === type.toLowerCase()
-                            ? "border-primary bg-primary"
-                            : "border-gray-300"
-                        }`}
-                      >
-                        {formData.property === type.toLowerCase() && (
-                          <CheckCircle2 className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
-                        )}
-                      </div>
-                      <span className={`font-semibold text-sm sm:text-base ${formData.property === type.toLowerCase() ? "text-primary" : "text-gray-600"}`}>
-                        {type}
-                      </span>
-                    </div>
+            {/* Form Fields - 2 columns */}
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+              {formFields.map((field, index) => (
+                <div key={index} className={field.name === "homeAddress" || field.name === "averagePowerBill" ? "col-span-2" : ""}>
+                  <label className="text-gray-700 font-semibold text-[10px] sm:text-xs flex items-center gap-1 mb-0.5">
+                    <span className="text-sm">{field.icon}</span> {field.label}
                   </label>
-                ))}
-              </div>
+                  <input
+                    type={field.type}
+                    name={field.name}
+                    value={formData[field.name as keyof typeof formData]}
+                    onChange={handleChange}
+                    placeholder={field.placeholder}
+                    required
+                    className={`w-full bg-gray-50 border text-xs sm:text-sm ${
+                      errors.includes(field.name)
+                        ? "border-red-400 bg-red-50"
+                        : "border-gray-200 hover:border-gray-300 focus:border-primary focus:bg-white"
+                    } rounded-lg p-2 placeholder:text-gray-400 focus:outline-none transition-all duration-300`}
+                  />
+                </div>
+              ))}
             </div>
 
-            {/* Existing Solar */}
-            <div>
-              <label className="text-gray-700 font-semibold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
-                <span className="text-base sm:text-lg">☀️</span> Do you have existing solar panels?
-              </label>
-              <div className="grid grid-cols-2 gap-2 sm:gap-3">
-                {["yes", "no"].map((option) => (
-                  <label
-                    key={option}
-                    className={`cursor-pointer rounded-xl border-2 p-2.5 sm:p-3 transition-all duration-300 ${
-                      formData.existingSolar === option
-                        ? "border-primary bg-primary/5 shadow-md"
-                        : "border-gray-200 hover:border-gray-300 bg-gray-50"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="existingSolar"
-                      value={option}
-                      onChange={handleChange}
-                      className="sr-only"
-                    />
-                    <div className="flex items-center gap-1.5 sm:gap-2">
-                      <div
-                        className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center ${
-                          formData.existingSolar === option
-                            ? "border-primary bg-primary"
-                            : "border-gray-300"
-                        }`}
-                      >
-                        {formData.existingSolar === option && (
-                          <CheckCircle2 className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
-                        )}
+            {/* Property Type & Existing Solar - Side by Side */}
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+              {/* Property Type */}
+              <div>
+                <label className="text-gray-700 font-semibold text-[10px] sm:text-xs flex items-center gap-1 mb-1">
+                  <span className="text-sm">🏗️</span> Property Type
+                </label>
+                <div className="flex gap-1.5">
+                  {["Residential", "Commercial"].map((type) => (
+                    <label
+                      key={type}
+                      className={`flex-1 cursor-pointer rounded-lg border p-1.5 sm:p-2 transition-all duration-300 ${
+                        formData.property === type.toLowerCase()
+                          ? "border-primary bg-primary/5"
+                          : "border-gray-200 hover:border-gray-300 bg-gray-50"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="property"
+                        value={type.toLowerCase()}
+                        onChange={handleChange}
+                        className="sr-only"
+                      />
+                      <div className="flex items-center justify-center gap-1">
+                        <div
+                          className={`w-3 h-3 rounded-full border flex items-center justify-center ${
+                            formData.property === type.toLowerCase()
+                              ? "border-primary bg-primary"
+                              : "border-gray-300"
+                          }`}
+                        >
+                          {formData.property === type.toLowerCase() && (
+                            <CheckCircle2 className="w-2 h-2 text-white" />
+                          )}
+                        </div>
+                        <span className={`font-medium text-[10px] sm:text-xs ${formData.property === type.toLowerCase() ? "text-primary" : "text-gray-600"}`}>
+                          {type}
+                        </span>
                       </div>
-                      <span className={`font-semibold text-sm sm:text-base ${formData.existingSolar === option ? "text-primary" : "text-gray-600"}`}>
-                        {option === "yes" ? "Yes" : "No"}
-                      </span>
-                    </div>
-                  </label>
-                ))}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Existing Solar */}
+              <div>
+                <label className="text-gray-700 font-semibold text-[10px] sm:text-xs flex items-center gap-1 mb-1">
+                  <span className="text-sm">☀️</span> Existing solar?
+                </label>
+                <div className="flex gap-1.5">
+                  {["yes", "no"].map((option) => (
+                    <label
+                      key={option}
+                      className={`flex-1 cursor-pointer rounded-lg border p-1.5 sm:p-2 transition-all duration-300 ${
+                        formData.existingSolar === option
+                          ? "border-primary bg-primary/5"
+                          : "border-gray-200 hover:border-gray-300 bg-gray-50"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="existingSolar"
+                        value={option}
+                        onChange={handleChange}
+                        className="sr-only"
+                      />
+                      <div className="flex items-center justify-center gap-1">
+                        <div
+                          className={`w-3 h-3 rounded-full border flex items-center justify-center ${
+                            formData.existingSolar === option
+                              ? "border-primary bg-primary"
+                              : "border-gray-300"
+                          }`}
+                        >
+                          {formData.existingSolar === option && (
+                            <CheckCircle2 className="w-2 h-2 text-white" />
+                          )}
+                        </div>
+                        <span className={`font-medium text-[10px] sm:text-xs ${formData.existingSolar === option ? "text-primary" : "text-gray-600"}`}>
+                          {option === "yes" ? "Yes" : "No"}
+                        </span>
+                      </div>
+                    </label>
+                  ))}
+                </div>
               </div>
             </div>
 
             {hasExistingSolar === "yes" && (
-              <div className="animate-slideUp">
-                <label className="text-gray-700 font-semibold text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
-                  <span className="text-base sm:text-lg">🔢</span> If yes, how many panels?
+              <div>
+                <label className="text-gray-700 font-semibold text-[10px] sm:text-xs flex items-center gap-1 mb-0.5">
+                  <span className="text-sm">🔢</span> How many panels?
                 </label>
                 <input
                   type="number"
@@ -262,37 +276,36 @@ const SolarSubsidyPopup = ({ isOpen, onClose }: SolarSubsidyPopupProps) => {
                   value={formData.solarCount}
                   onChange={handleChange}
                   placeholder="Enter the number of solar panels"
-                  className="w-full bg-gray-50 border-2 border-gray-200 hover:border-gray-300 focus:border-primary focus:bg-white rounded-xl p-2.5 sm:p-3 text-sm sm:text-base placeholder:text-gray-400 focus:outline-none transition-all duration-300"
+                  className="w-full bg-gray-50 border border-gray-200 hover:border-gray-300 focus:border-primary focus:bg-white rounded-lg p-2 text-xs sm:text-sm placeholder:text-gray-400 focus:outline-none transition-all duration-300"
                 />
               </div>
             )}
 
-            <div className="flex flex-col gap-3 mt-4 sm:mt-6">
+            <div className="flex gap-2 mt-3 pt-2 border-t border-gray-100">
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2.5 rounded-lg transition-all duration-300 text-xs sm:text-sm"
+              >
+                Cancel
+              </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary hover:to-teal-700 text-white py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 sm:gap-3 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                className="flex-[2] bg-gradient-to-r from-primary to-primary/90 hover:from-primary hover:to-teal-700 text-white py-2.5 rounded-lg font-bold text-xs sm:text-sm transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1.5 shadow-lg hover:shadow-xl"
               >
                 {loading ? (
                   <>
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                     Processing...
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-5 h-5" />
+                    <Sparkles className="w-4 h-4" />
                     Check Eligibility
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className="w-4 h-4" />
                   </>
                 )}
-              </button>
-
-              <button
-                type="button"
-                onClick={onClose}
-                className="w-full mt-[10px] bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold py-3 rounded-xl transition-colors text-sm sm:text-base"
-              >
-                Remove this popup
               </button>
             </div>
           </form>

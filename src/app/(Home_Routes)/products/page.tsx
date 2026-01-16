@@ -1,7 +1,5 @@
 "use client";
-import BookSolar from "@/components/BookSolar";
 import ContactForm from "@/components/Contact/ContactForm";
-import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 import PoweringCard from "@/components/products/PoweringCard";
@@ -16,9 +14,51 @@ import { Clock3, Leaf, MoveRight, Network, X } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-
-
-
+// Product Schema for SEO
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Solar Products",
+  description: "Premium solar panels, battery storage, and inverters for residential and commercial use",
+  itemListElement: [
+    {
+      "@type": "Product",
+      position: 1,
+      name: "Residential Solar Panels",
+      description: "High-efficiency solar panels for homes with 25+ year lifespan",
+      brand: { "@type": "Brand", name: "Daylight Solar" },
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "AUD",
+        availability: "https://schema.org/InStock",
+      },
+    },
+    {
+      "@type": "Product",
+      position: 2,
+      name: "Commercial Solar Systems",
+      description: "Large-scale solar solutions for businesses and industrial properties",
+      brand: { "@type": "Brand", name: "Daylight Solar" },
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "AUD",
+        availability: "https://schema.org/InStock",
+      },
+    },
+    {
+      "@type": "Product",
+      position: 3,
+      name: "Solar Battery Storage",
+      description: "Store excess solar energy for use anytime with advanced battery systems",
+      brand: { "@type": "Brand", name: "Daylight Solar" },
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "AUD",
+        availability: "https://schema.org/InStock",
+      },
+    },
+  ],
+};
 
 const FeatureSectionData: FeatureSectionProps[] = [
   {
@@ -61,6 +101,13 @@ const Products = () => {
 
   return (
     <div className="animate-fadeIn">
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productSchema),
+        }}
+      />
       <Navbar />
       <HeroSection
         img="/backgroundImg/productbg.png"
@@ -86,8 +133,6 @@ const Products = () => {
           </div>
         }
       />
-
-      <BookSolar />
 
       {/* Section 2 */}
       <div className="bg-primary py-24">
@@ -127,19 +172,20 @@ const Products = () => {
         </div>
 
         <div className="absolute inset-0 globalContainer py-20">
-          <h2 className="text-white text-center md:text-left text-3xl md:text-4xl mb-7">
+          <h2 className="text-white text-center md:text-left text-3xl md:text-4xl mb-7 animate-slideUp">
             Harness the Sun at Home
           </h2>
           <div className="flex flex-col gap-5 justify-center h-full">
             {HarnessData.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-[#FFFFFF1A] w-full md:w-[498px] py-6 space-y-2 px-6 rounded-xl"
+                className="group bg-[#FFFFFF1A] hover:bg-[#FFFFFF30] w-full md:w-[498px] py-6 space-y-2 px-6 rounded-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-white/10 cursor-pointer border border-transparent hover:border-white/20 animate-slideUp"
+                style={{ animationDelay: `${idx * 100}ms`, transform: 'perspective(1000px)' }}
               >
-                <h2 className="text-base md:text-xl text-white">
+                <h2 className="text-base md:text-xl text-white group-hover:text-secondary transition-colors duration-300">
                   {item.title}
                 </h2>
-                <p className="text-white textRes font-light">{item.des}</p>
+                <p className="text-white textRes font-light group-hover:text-white/90 transition-colors duration-300">{item.des}</p>
               </div>
             ))}
           </div>
@@ -155,21 +201,23 @@ const Products = () => {
             <br /> Sustaining Growth
           </h4>
           <div className="flex items-center justify-center gap-12 mt-12">
-            <div className="bg-white shadow-2xl hover:shadow-3xl p-8 md:p-10 rounded-2xl md:w-[60%] h-fit transition-all duration-500 hover:-translate-y-2 border border-transparent hover:border-primary/20">
-              <div className="group">
-                <div className="bg-gray-200 w-full h-3 rounded-full relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-secondary to-yellow-400 w-[80%] h-3 rounded-full transition-all duration-1000 group-hover:w-[85%]"></div>
+            <div className="group bg-white shadow-2xl hover:shadow-3xl p-8 md:p-10 rounded-2xl md:w-[60%] h-fit transition-all duration-500 hover:-translate-y-3 hover:rotate-1 border border-transparent hover:border-primary/20 animate-slideUp" style={{ transform: 'perspective(1000px)', animationDelay: '200ms' }}>
+              <div className="mb-8">
+                <div className="bg-gray-200 w-full h-4 rounded-full relative overflow-hidden shadow-inner">
+                  <div className="absolute inset-0 bg-gradient-to-r from-secondary via-yellow-400 to-secondary w-[80%] h-4 rounded-full transition-all duration-1000 group-hover:w-[85%] animate-pulse"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-full h-4 animate-shimmer"></div>
                 </div>
-                <p className="text-sm md:text-base mt-4 text-gray-700 font-medium">
+                <p className="text-sm md:text-base mt-4 text-gray-700 font-medium group-hover:text-primary transition-colors duration-300">
                   80% Average Energy Cost Reduction
                 </p>
               </div>
 
-              <div className="my-8 group">
-                <div className="bg-gray-200 w-full h-3 rounded-full relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-teal-500 w-[90%] h-3 rounded-full transition-all duration-1000 group-hover:w-[95%]"></div>
+              <div className="">
+                <div className="bg-gray-200 w-full h-4 rounded-full relative overflow-hidden shadow-inner">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary via-teal-500 to-primary w-[90%] h-4 rounded-full transition-all duration-1000 group-hover:w-[95%] animate-pulse"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-full h-4 animate-shimmer"></div>
                 </div>
-                <p className="text-sm md:text-base mt-4 text-gray-700 font-medium">
+                <p className="text-sm md:text-base mt-4 text-gray-700 font-medium group-hover:text-primary transition-colors duration-300">
                   90% Customer Satisfaction Rate
                 </p>
               </div>
@@ -185,7 +233,7 @@ const Products = () => {
           <h4 className="text-3xl md:text-4xl text-primary font-bold animate-slideUp">
             Stored Power. Uninterrupted Energy.
           </h4>
-          <p className="font-medium text-primary/80 text-lg mt-2">
+          <p className="font-medium text-primary/80 text-lg mt-2 animate-slideUp" style={{ animationDelay: '100ms' }}>
             Never worry about BLACKOUTS again.
           </p>
 
@@ -193,10 +241,14 @@ const Products = () => {
             {UninterruptedData.map((item, idx) => (
               <div
                 key={idx}
-                className="group bg-[#262626] shadow-2xl hover:shadow-3xl p-8 md:p-10 rounded-2xl md:w-[50%] h-fit transition-all duration-500 hover:-translate-y-2 border border-transparent hover:border-secondary/30"
+                className="group bg-[#262626] shadow-2xl hover:shadow-3xl p-8 md:p-10 rounded-2xl md:w-[50%] h-fit transition-all duration-500 hover:-translate-y-4 hover:rotate-1 border border-transparent hover:border-secondary/30 animate-slideUp cursor-pointer"
+                style={{ 
+                  animationDelay: `${idx * 150}ms`,
+                  transform: 'perspective(1000px)',
+                }}
               >
                 <div className="flex gap-5 items-center">
-                  <div className="relative w-12 h-12 group-hover:scale-110 transition-transform duration-300">
+                  <div className="relative w-14 h-14 group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 bg-gradient-to-br from-secondary/20 to-transparent p-2 rounded-full">
                     <Image
                       src={item.icon}
                       alt="Commercial Solar Panels Installation for Home In Brisbane"
@@ -207,13 +259,15 @@ const Products = () => {
                   </div>
                   <h4 className="text-white text-xl md:text-2xl font-semibold group-hover:text-secondary transition-colors duration-300">{item.title}</h4>
                 </div>
-                <p className="text-white font-light my-6">{item.des}</p>
-                <div className="bg-[#374151] w-full h-2 rounded-full relative">
+                <p className="text-white font-light my-6 group-hover:text-white/90 transition-colors duration-300">{item.des}</p>
+                <div className="bg-[#374151] w-full h-3 rounded-full relative overflow-hidden shadow-inner">
                   <div
-                    className={`absolute inset-0 bg-[#2CA758] h-2 rounded-full`}
+                    className="absolute inset-0 bg-gradient-to-r from-[#2CA758] to-emerald-400 h-3 rounded-full transition-all duration-700 group-hover:shadow-lg group-hover:shadow-green-500/50"
                     style={{ width: `${item.energy}%` }}
                   ></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent w-full h-3 animate-shimmer"></div>
                 </div>
+                <p className="text-secondary text-sm mt-2 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">{item.energy}% Efficiency</p>
               </div>
             ))}
           </div>
@@ -223,18 +277,19 @@ const Products = () => {
 
       {/* Section 6 */}
       <div className="relative overflow-hidden globalContainer py-20">
-        <h2 className="text-2xl md:text-4xl font-bold text-center mb-16">
+        <h2 className="text-2xl md:text-4xl font-bold text-center mb-16 animate-slideUp">
           Why Daylight Solar?
         </h2>
         <div className="flex flex-col gap-5 lg:gap-20">
           {FeatureSectionData.map((feature, index) => (
             <div
               key={index}
-              className={`mb-8 flex  ${
+              className={`group mb-8 flex ${
                 index % 2 !== 0
                   ? "lg:justify-start justify-start"
                   : "lg:justify-end  justify-start"
-              } gap-4 w-full lg:w-[50%] `}
+              } gap-4 w-full lg:w-[50%] animate-slideUp`}
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <div
                 className={`flex gap-5 items-center ${
@@ -246,22 +301,22 @@ const Products = () => {
                 <div
                   className={`w-full lg:w-[500px] flex flex-col ${
                     index % 2 !== 0 ? "lg:items-start" : "lg:items-en"
-                  } `}
+                  } group-hover:translate-x-2 transition-transform duration-300`}
                 >
-                  <h3 className="text-base md:text-2xl font-medium text-wrap">
+                  <h3 className="text-base md:text-2xl font-medium text-wrap group-hover:text-primary transition-colors duration-300">
                     {feature.title}
                   </h3>
-                  <p className="textRes font-light mt-1 text-wrap">
+                  <p className="textRes font-light mt-1 text-wrap group-hover:text-gray-600 transition-colors duration-300">
                     {feature.description}
                   </p>
                 </div>
                 <div className="relative z-10">
-                  <div className="bg-yellow-500 p-2 md:p-4 rounded-full flex items-center justify-center">
+                  <div className="bg-yellow-500 p-2 md:p-4 rounded-full flex items-center justify-center group-hover:scale-125 group-hover:rotate-12 group-hover:bg-yellow-400 group-hover:shadow-xl group-hover:shadow-yellow-500/50 transition-all duration-500">
                     {feature.icon}
                     <div
                       className={`hidden lg:block absolute ${
                         index === 3 ? "w-[0px]" : "w-[1px]"
-                      } h-44 bg-[#E5E7EB] inset-0 -z-50 left-5 top-5`}
+                      } h-44 bg-[#E5E7EB] inset-0 -z-50 left-5 top-5 group-hover:bg-yellow-300 transition-colors duration-300`}
                     ></div>
                   </div>
                 </div>
@@ -284,7 +339,6 @@ const Products = () => {
           </div>
         </div>
       )}
-      <Footer />
     </div>
   );
 };

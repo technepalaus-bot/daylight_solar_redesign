@@ -1,6 +1,4 @@
 "use client";
-import BookSolar from "@/components/BookSolar";
-import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 import PackageCard from "@/components/products/PackageCard";
@@ -8,9 +6,45 @@ import SystemCard from "@/components/products/SystemCard";
 import { ResidentialInfo, ResidentialPackage } from "@/constants/home";
 import React from "react";
 
+// Residential Solar Schema for SEO
+const residentialSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Residential Solar Panel Installation",
+  provider: {
+    "@type": "LocalBusiness",
+    name: "Daylight Solar",
+    telephone: "+61-7-3422-6150",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Brisbane",
+      addressRegion: "QLD",
+      addressCountry: "AU",
+    },
+  },
+  areaServed: ["Brisbane", "Gold Coast", "Sunshine Coast", "Queensland"],
+  description: "Premium residential solar panel installation services for Australian homes. Save up to 70% on electricity bills with government rebates available.",
+  offers: {
+    "@type": "Offer",
+    priceCurrency: "AUD",
+    availability: "https://schema.org/InStock",
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      priceCurrency: "AUD",
+    },
+  },
+};
+
 const Residential = () => {
   return (
     <div className="overflow-hidden">
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(residentialSchema),
+        }}
+      />
       <Navbar/>
       {/* hero section */}
       <HeroSection
@@ -19,8 +53,6 @@ const Residential = () => {
         SmallImg={true}
       />
       {/* hero section */}
-
-      <BookSolar/>
 
       {/*  section 1 */}
       <div className="bg-primary py-12 md:py-20 relative overflow-hidden">
@@ -109,7 +141,6 @@ const Residential = () => {
         </div>
       </div>
       {/*  section 2 */}
-      <Footer/>
     </div>
   );
 };

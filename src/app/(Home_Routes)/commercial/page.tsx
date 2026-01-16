@@ -1,6 +1,4 @@
 "use client";
-import BookSolar from "@/components/BookSolar";
-import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 import PackageCard from "@/components/products/PackageCard";
@@ -12,9 +10,35 @@ import {
 } from "@/constants/home";
 import React from "react";
 
+// Commercial Solar Schema for SEO
+const commercialSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Commercial Solar Panel Installation",
+  provider: {
+    "@type": "LocalBusiness",
+    name: "Daylight Solar",
+    telephone: "+61-7-3422-6150",
+  },
+  areaServed: ["Brisbane", "Gold Coast", "Sunshine Coast", "Queensland"],
+  description: "Large-scale commercial solar installation for businesses, warehouses, and industrial properties. Reduce operating costs by up to 80% with fast ROI.",
+  offers: {
+    "@type": "Offer",
+    priceCurrency: "AUD",
+    availability: "https://schema.org/InStock",
+  },
+};
+
 const Commercial = () => {
   return (
     <div className="overflow-hidden">
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(commercialSchema),
+        }}
+      />
       <Navbar />
       {/* {section 1} */}
       <HeroSection
@@ -23,10 +47,6 @@ const Commercial = () => {
         SmallImg={true}
       />
       {/* {section 1} */}
-
-      {/* {section 2} */}
-      <BookSolar />
-      {/* {section 2} */}
 
       {/* {section 3} */}
       <div className="bg-primary py-12 md:py-20 relative overflow-hidden">
@@ -114,7 +134,6 @@ const Commercial = () => {
         </div>
       </div>
       {/* {section 4} */}
-      <Footer />
     </div>
   );
 };

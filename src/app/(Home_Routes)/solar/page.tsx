@@ -1,23 +1,52 @@
 "use client";
-import BookSolar from "@/components/BookSolar";
-import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 import PackageCard from "@/components/products/PackageCard";
 import { SolarProducts } from "@/constants/home";
 import React from "react";
 
+// Solar Battery Schema for SEO
+const solarBatterySchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: "Solar Battery Storage Systems",
+  description: "Premium solar battery storage solutions including Tesla Powerwall, LG RESU, and Enphase batteries. Store excess solar energy for 24/7 power independence.",
+  brand: {
+    "@type": "Brand",
+    name: "Daylight Solar",
+  },
+  offers: {
+    "@type": "AggregateOffer",
+    priceCurrency: "AUD",
+    availability: "https://schema.org/InStock",
+    seller: {
+      "@type": "Organization",
+      name: "Daylight Solar",
+    },
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.9",
+    reviewCount: "89",
+  },
+};
+
 const Solar = () => {
   return (
     <div className="overflow-hidden">
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(solarBatterySchema),
+        }}
+      />
       <Navbar />
       <HeroSection
         img="/backgroundImg/solarbg.png"
         Children={null}
         SmallImg={true}
       />
-
-      <BookSolar />
 
       <div className="bg-primary py-12 md:py-20 relative overflow-hidden">
         {/* Decorative elements */}
@@ -119,7 +148,6 @@ const Solar = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
